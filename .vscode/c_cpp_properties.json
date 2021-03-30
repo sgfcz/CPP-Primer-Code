@@ -21,7 +21,7 @@
             "compilerPath": "D:/LLVM/bin/clang.exe",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "clang-x64",
+            "intelliSenseMode": "windows-clang-x64",
             "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
