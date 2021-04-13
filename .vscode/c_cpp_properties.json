@@ -4,13 +4,13 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "D:\\Qt\\Qt5.12.9\\5.12.9\\mingw73_64\\include\\QtWidgets\\5.12.9\\QtWidgets\\private",
-                "D:\\Qt\\Qt5.12.9\\5.12.9\\mingw73_64\\include\\QtWidgets",
-                "D:\\Qt\\Qt5.12.9\\5.12.9\\mingw73_64\\include",
-                "D:\\Qt\\Qt5.12.9\\5.12.9\\mingw73_64\\include\\QtCore",
-                "D:\\Qt\\Qt5.12.9\\5.12.9\\mingw73_64\\include\\QtCore\\5.12.9\\QtCore\\private",
-                "D:\\Qt\\Qt5.12.9\\5.12.9\\mingw73_64\\include\\QtGui",
-                "D:\\Qt\\Qt5.12.9\\5.12.9\\mingw73_64\\include\\QtGui\\5.12.9\\QtGui\\private"
+                "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include\\QtWidgets\\5.11.3\\QtWidgets\\private",
+                "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include\\QtWidgets",
+                "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include",
+                "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include\\QtCore",
+                "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include\\QtCore\\5.11.3\\QtCore\\private",
+                "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include\\QtGui",
+                "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include\\QtGui\\5.11.3\\QtGui\\private"
             ],
             "defines": [
                 "_DEBUG",
