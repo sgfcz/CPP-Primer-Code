@@ -3,12 +3,9 @@
 
 #include <QMainWindow>
 #include <QImage>
-#if defined(QT_PRINTSUPPORT_LIB)
-#include <QtPrintSupport/qtprintsupportglobal.h>
 
-#   if QT_CONFIG(printer)
-#       include(QPrinter)
-#   endif
+#ifndef QT_NO_PRINTER
+#include <QPrinter>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -24,7 +21,7 @@ class ImageViewer : public QMainWindow
     Q_OBJECT
 
 public:
-    ImageViewer(QWidget *parent = nullptr);
+    ImageViewer();
     bool loadFile(const QString &);
 
 private slots:
@@ -51,9 +48,9 @@ private:
     QImage image;
     QLabel *imageLabel;
     QScrollArea *scrollArea;
-    double scaleFactor = 1;
+    double scaleFactor;
 
-#if defined(QT_PRINTSUPPORT_LIB) && QT_CONFIG(printer)
+#ifndef QT_NO_PRINTER
     QPrinter printer;
 #endif
 

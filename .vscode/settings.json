@@ -25,7 +25,8 @@
         "*.tcc": "cpp",
         "qwidget": "cpp",
         "qtime": "cpp",
-        "qtimer": "cpp"
+        "qtimer": "cpp",
+        "xtr1common": "cpp"
     },
     "cquery.cacheDirectory": "${workspaceFolder}/.vscode/cquery_cached_index/",
     "cmake.sourceDirectory": "${workspaceFolder}/DataStructuresAndAlgorithms/ch3Linked_List/Singly_Linked_List",
