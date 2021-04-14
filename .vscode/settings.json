@@ -22,8 +22,12 @@
         "iostream": "cpp",
         "iosfwd": "cpp",
         "fstream": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "qwidget": "cpp",
+        "qtime": "cpp",
+        "qtimer": "cpp"
     },
     "cquery.cacheDirectory": "${workspaceFolder}/.vscode/cquery_cached_index/",
-    "cmake.sourceDirectory": "${workspaceFolder}/DataStructuresAndAlgorithms/ch3Linked_List/Singly_Linked_List"
+    "cmake.sourceDirectory": "${workspaceFolder}/DataStructuresAndAlgorithms/ch3Linked_List/Singly_Linked_List",
+    "C_Cpp.errorSquiggles": "Enabled"
 }
