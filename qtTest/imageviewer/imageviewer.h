@@ -14,6 +14,7 @@ class QLabel;
 class QMenu;
 class QScrollArea;
 class QScrollBar;
+class QtPrintSupport;
 QT_END_NAMESPACE
 
 class ImageViewer : public QMainWindow

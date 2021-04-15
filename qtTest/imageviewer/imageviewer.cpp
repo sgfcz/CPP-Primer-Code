@@ -1,5 +1,5 @@
 #include <QtWidgets>
-
+#include <QPrintDialog>
 #if defined(QT_PRINTSUPPORT_LIB)
 #include <QtPrintSupport/qtprintsupportglobal.h>
 #if QT_CONFIG(printdialog)
@@ -26,6 +26,59 @@ ImageViewer::ImageViewer()
     createActions();
 
     resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
+}
+
+bool ImageViewer::loadFile(const QString &fileName)
+{
+    QImageReader reader(fileName);
+    reader.setAutoTransform(true);
+    const QImage newImage = reader.read();
+    if (newImage.isNull()) {
+        QMessageBox::information(this, QGuiApplication::applicationDisplayName(),
+                                    tr("Cannot load %1: %2").arg(QDir::toNativeSeparators(fileName), reader.errorString()));
+        return false;
+    }
+
+    setImage(newImage);
+
+    setWindowFilePath(fileName);
+
+    const QString message = tr("Opened \"%1\", %2%3, Depth: %4")
+        .arg(QDir::toNativeSeparators(fileName)).arg(image.width()).arg(image.height()).arg(image.depth());
+    statusBar()->showMessage(message);
+    return true;
+}
+
+void ImageViewer::setImage(const QImage &newImage)
+{
+    image = newImage;
+    imageLabel->setPixmap(QPixmap::fromImage(image));
+
+    scaleFactor = 1.0;
+
+    scrollArea->setVisible(true);
+    printAct->setEnabled(true);
+    fitToWindowAct->setEnabled(true);
+    updateActions();
+
+    if(!fitToWindowAct->isChecked())
+        imageLabel->adjustSize();
+}
+
+bool ImageViewer::saveFile(const QString &fileName)
+{
+    QImageWriter writer(fileName);
+
+    if (!writer.write(image)) {
+        QMessageBox::information(this, QGuiApplication::applicationDisplayName(),
+                                    tr("Cannot write %1: %2")
+                                    .arg(QDir::toNativeSeparators(fileName)), writer.errorString());
+        return false;
+    }
+
+    const QString message = tr("Wrote \"%1\"").arg(QDir::toNativeSeparators(fileName));
+    statusBar()->showMessage(message);
+    return true;
 }
 
 static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode)
@@ -58,7 +111,99 @@ void ImageViewer::open()
     while (dialog.exec() == QDialog::Accepted && !loadFile(dialog.selectedFiles().first())) {}
 }
 
+void ImageViewer::saveAs()
+{
+    QFileDialog dialog(this, tr("Save File As"));
+    initializeImageFileDialog(dialog, QFileDialog::AcceptSave);
 
+    while (dialog.exec() == QDialog::Accepted && saveFile(dialog.selectedFiles().first())) {}
+}
+
+void ImageViewer::print()
+{
+    Q_ASSERT(imageLabel->pixmap());
+#if QT_CONFIG(printdialog)
+    QPrintDialog dialog(&printer, this);
+
+    if (dialog.exec()) {
+        QPainter painter(&printer);
+        QRect rect = painter.viewport();
+        QSize size = imageLabel->pixmap()->size();
+        size.scale(rect.size(), Qt::KeepAspectRatio);
+        painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
+        painter.setWindow(imageLabel->pixmap()->rect());
+        painter.drawPixmap(0, 0, *imageLabel->pixmap());
+    }
+#endif
+}
+
+void ImageViewer::copy()
+{
+#ifndef QT_NO_CLIPBOARD
+    QGuiApplication::clipboard()->setImage(image);
+#endif
+}
+
+#ifndef QT_NO_CLIPBOARD
+static QImage clipboardImage()
+{
+    if (const QMimeData *mimeData = QGuiApplication::clipboard()->mimeData()) {
+        if (mimeData->hasImage()) {
+            const QImage image = qvariant_cast<QImage>(mimeData->imageData());
+            if (!image.isNull())
+                return image;
+        }
+    }
+    return QImage();
+}
+#endif
+
+void ImageViewer::paste()
+{
+#ifndef QT_NO_CLIPBOARD
+    const QImage newImage = clipboardImage();
+    if (newImage.isNull()) {
+        statusBar()->showMessage(tr("No image in clipboard"));
+    } else {
+        setImage(newImage);
+        setWindowFilePath(QString());
+        const QString message = tr("Obtained image from clipboard, %1x%2, Depth: %3")
+            .arg(newImage.width()).arg(newImage.height()).arg(newImage.depth());
+        statusBar()->showMessage(message);
+    }
+#endif
+}
+
+void ImageViewer::zoomIn()
+{
+    scaleImage(1.25);
+}
+
+void ImageViewer::zoomOut()
+{
+    scaleImage(0.8);
+}
+
+void ImageViewer::normalSize()
+{
+    imageLabel->adjustSize();
+    scaleFactor = 1.0;
+}
+
+void ImageViewer::fitToWindow()
+{
+    bool fitToWindow = fitToWindowAct->isChecked();
+    scrollArea->setWidgetResizable(fitToWindow);
+    if (!fitToWindow)
+        normalSize();
+    updateActions();
+}
+
+void ImageViewer::about()
+{
+    QMessageBox::about(this, tr("About Image Viewer"),
+    tr("<p>The <b>Image Viewer</b></p>"));
+}
 
 void ImageViewer::createActions()
 {
@@ -98,7 +243,7 @@ void ImageViewer::createActions()
     zoomOutAct->setShortcut(QKeySequence::ZoomIn);
     zoomOutAct->setEnabled(false);
 
-    normalSizeAct = viewMenu->addAction(tr("&Fit to Window"), this, &ImageViewer::fitToWindow);
+    normalSizeAct = viewMenu->addAction(tr("&Normal Size"), this, &ImageViewer::fitToWindow);
     normalSizeAct->setShortcut(tr("Ctrl+S"));
     normalSizeAct->setEnabled(false);
 
