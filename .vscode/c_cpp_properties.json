@@ -12,7 +12,8 @@
                 "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include\\QtGui",
                 "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include\\QtGui\\5.11.3\\QtGui\\private",
                 "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include\\QtPrintSupport",
-                "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include\\QtPrintSupport\\5.11.3\\QtPrintSupport\\private"
+                "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include\\QtPrintSupport\\5.11.3\\QtPrintSupport\\private",
+                "D:\\zxing-cpp-1.1.1\\core\\src"
             ],
             "defines": [
                 "_DEBUG",
