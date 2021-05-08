@@ -61,7 +61,11 @@ private:
     QLabel *screenNameLabel;
 
     QAction *addSampleImagesAct;
-    
+    QAction *addSampleImagesAct;
+    QAction *removeAllImagesAct;
+    QAction *guessModeStateAct;
+    QAction *nativeFileDialogAct;
+    QActionGroup *styleActionGroup;
 };
 
 #endif
