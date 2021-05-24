@@ -14,7 +14,8 @@
                 "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include\\QtPrintSupport",
                 "D:\\Qt\\Qt5.11.3\\5.11.3\\mingw53_32\\include\\QtPrintSupport\\5.11.3\\QtPrintSupport\\private",
                 "D:\\zxing-cpp-1.1.1\\core\\src",
-                "D:\\opencv\\opencv\\build\\include"
+                "D:\\opencv\\opencv\\build\\include",
+                "D:\\opencv\\opencv\\build\\include\\opencv2"
             ],
             "defines": [
                 "_DEBUG",
